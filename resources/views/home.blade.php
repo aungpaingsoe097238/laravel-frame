@@ -16,6 +16,10 @@
 
                     {{ __('You are logged in!') }}
 
+                    @isAdmin()
+                        Hello {{ Auth::user()->name }}
+                    @endisAdmin
+
                 </div>
             </div>
         </div>

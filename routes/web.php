@@ -19,4 +19,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware('isAdmin')->group(function (){
+    Route::resource('roles',\App\Http\Controllers\RoleController::class);
+    Route::resource('users',\App\Http\Controllers\UserController::class);
+});
+
