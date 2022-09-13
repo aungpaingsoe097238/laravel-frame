@@ -15,8 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest('id')->with('roles')->get();
-        return $users;
+        $users = User::latest('id')->with('roles')->paginate(10);
+        return view('user.index',compact('users'));
     }
 
     /**
@@ -49,7 +49,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::where('id',$id)->with('roles')->first();
-        return $user->isAdmin();
+        return $user;
     }
 
     /**

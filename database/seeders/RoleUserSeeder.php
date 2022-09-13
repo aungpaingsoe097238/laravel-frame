@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-class RoleSeeder extends Seeder
+class RoleUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,13 +15,8 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $roles = ['admin','user'];
-
-        foreach ($roles as $role){
-            Role::create([
-                'name' => $role,
-            ]);
+        foreach(User::all() as $user){
+            $user->roles()->attach(Role::inRandomOrder()->first()->id);
         }
-
     }
 }
