@@ -33,16 +33,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">Home</a>
-                        </li>
+
+                        <x-nav-link url="{{ route('home') }}" name="Home"></x-nav-link>
+
                         @auth
                             @isAdmin()
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('roles.index') }}">Role</a>
+                                    <x-nav-link url="{{ route('roles.index') }}" name="Manage Role"></x-nav-link>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                                    <x-nav-link url="{{ route('users.index') }}" name="Manage User"></x-nav-link>
                                 </li>
                             @endisAdmin
                         @endauth
@@ -55,13 +55,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <x-nav-link url="{{ route('login') }}" name="Login"></x-nav-link>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <x-nav-link url="{{ route('register') }}" name="Register"></x-nav-link>
                                 </li>
                             @endif
                         @else

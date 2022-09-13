@@ -1,4 +1,4 @@
-<x-container cols="col-lg-8">
+<x-container>
     <x-card title="User Lists">
         <table class="table">
             <thead>
