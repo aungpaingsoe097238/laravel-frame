@@ -16,7 +16,7 @@ class RoleUserSeeder extends Seeder
     public function run()
     {
         foreach(User::all() as $user){
-            $user->roles()->attach(Role::inRandomOrder()->first()->id);
+            $user->roles()->sync(Role::inRandomOrder()->first()->id);
         }
     }
 }

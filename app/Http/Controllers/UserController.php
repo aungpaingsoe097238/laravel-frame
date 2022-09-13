@@ -38,6 +38,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**
@@ -60,7 +61,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::where('id',$id)->with('roles')->first();
+        return view('user.edit',compact('user'));
     }
 
     /**
@@ -72,7 +74,32 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'nullable|string|min:3|unique:users,name,'.$user->id,
+            'email' => 'nullable|string|unique:users,email,'.$user->id,
+            'password' => 'nullable|confirmed',
+            'roles' => 'nullable',
+            'roles*' => 'integer|exists:roles,id'
+        ]);
+
+        if($request->name){
+            $user->name = $request->name;
+        }
+        if($request->email){
+            $user->email = $request->email;
+        }
+        if($request->password){
+            $user->password = \Hash::make($request->password);
+        }
+        if($request->roles){
+            $user->roles()->sync($request->roles);
+        }
+        $user->update();
+
+
+        return redirect()->route('users.index')->with('status','User Successfully Updated.');
     }
 
     /**
@@ -83,6 +110,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('users.index')->with('status','User Successfully Deleted.');
     }
 }
